@@ -35,24 +35,28 @@ export function New() {
     } else {
       setWeekDays((prevState) => [...prevState, weekDayIndex]);
     }
+  }
 
-    async function handleCreateNewHabit () {
-      try {
-        if (!title.trim() || weekDays.length === 0) {
-          Alert.alert("Novo Hábito", "Informe o nome do hábito e escolha a periodicidade");
-        }
-
-        await api.post('/habits',{title, weekDays})
-
-        setTitle('')
-        setWeekDays([])
-
-        Alert.alert('Novo Hábito', 'Hábito criado com sucesso')
-      } catch (error) {
-        console.log(error);
-        Alert.alert('ops', 'não foi possivel criar um novo hábito')
+  async function handleCreateNewHabit() {
+    try {
+      if (!title.trim() || weekDays.length === 0) {
+        Alert.alert(
+          "Novo Hábito",
+          "Informe o nome do hábito e escolha a periodicidade"
+        );
       }
+
+      await api.post("/habits", { title, weekDays });
+
+      setTitle("");
+      setWeekDays([]);
+
+      Alert.alert("Novo Hábito", "Hábito criado com sucesso");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("ops", "não foi possivel criar um novo hábito");
     }
+  }
 
   return (
     <View className="flex-1 bg-background px-8 pt-16">

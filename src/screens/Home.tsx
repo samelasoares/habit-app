@@ -70,22 +70,23 @@ export function Home() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
-        {datesFromYearStart.map((item, index) => {
-          const dayInSummary = summary.find((day) => {
-            return dayjs(item).isSame(day.date, "day");
-          });
-          return (
-            <HabitDay
-              key={item.toISOString()}
-              onPress={() =>
-                navigate("SummaryDay", { date: item.toISOString() })
-              }
-              date={item}
-              amount={dayInSummary?.amount}
-              completed={dayInSummary?.completed}
-            />
-          );
-        })}
+        <View className="flex-row flex-wrap">
+          {datesFromYearStart.map((item, index) => {
+            const dayInSummary = summary.find((day) => {
+              return dayjs(item).isSame(day.date, "day");
+            });
+            console.log('[File: Home.tsx > DatesFromYears]',item, summary.map(i => i.date))
+            return (
+              <HabitDay
+                key={item.toISOString()}
+                onPress={() => navigate("new", { date: item.toISOString() })}
+                date={item}
+                amountOfHabits={dayInSummary?.amount}
+                amountCompleted={dayInSummary?.completed}
+              />
+            );
+          })}
+        </View>
       </ScrollView>
     </View>
   );

@@ -33,8 +33,7 @@ export function HabitDay({
       : 0;
   const today = dayjs().startOf("day").toDate();
   const isCurrentDay = dayjs(date).isSame(today);
-
-  console.log(date);
+  
   return (
     <TouchableOpacity
       className={clsx("rounded-lg border-2 m-1", {
