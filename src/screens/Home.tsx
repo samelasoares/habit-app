@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { View, Text, ScrollView, Alert } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import dayjs from "dayjs";
 
 import { api } from "../lib/axios";
@@ -12,7 +12,7 @@ import { Loading } from "../components/Loading";
 
 const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 const datesFromYearStart = generateRangeDatesFromYearStart();
-const minimumSummaryDatesSizes = 18 * 6;
+const minimumSummaryDatesSizes = 18 * 5;
 const amountOfDaysToFill = minimumSummaryDatesSizes - datesFromYearStart.length;
 
 interface SummayProps {
@@ -42,9 +42,11 @@ export function Home() {
     }
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   if (loading) {
     return <Loading />;
@@ -75,17 +77,28 @@ export function Home() {
             const dayInSummary = summary.find((day) => {
               return dayjs(item).isSame(day.date, "day");
             });
-            console.log('[File: Home.tsx > DatesFromYears]',item, summary.map(i => i.date))
+            console.log(
+              "[File: Home.tsx > DatesFromYears]",
+              item,
+              summary.map((i) => i.date)
+            );
             return (
               <HabitDay
                 key={item.toISOString()}
-                onPress={() => navigate("new", { date: item.toISOString() })}
+                onPress={() => navigate("habit", { date: item.toISOString() })}
                 date={item}
                 amountOfHabits={dayInSummary?.amount}
                 amountCompleted={dayInSummary?.completed}
               />
             );
           })}
+          {amountOfDaysToFill > 0 &&
+            Array.from({ length: amountOfDaysToFill }).map((_, index) => (
+              <View
+                className="bg-zinc-900 rounded-lg border-2 m-1 border-zinc-800 opacity-40"
+                style={{ width: DAY_SIZE, height: DAY_SIZE }}
+              />
+            ))}
         </View>
       </ScrollView>
     </View>
