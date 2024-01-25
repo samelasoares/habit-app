@@ -23,7 +23,7 @@ const availableWeekDays = [
   "Sábado",
 ];
 
-export function New() {
+export function NewHabit() {
   const [title, setTitle] = useState("");
   const [weekDays, setWeekDays] = useState<number[]>([]);
 
@@ -43,7 +43,7 @@ export function New() {
          return Alert.alert("Novo Hábito","Informe o nome do hábito e escolha a periodicidade");
       }
 
-      await api.post("/habits", { title, weekDays });
+       await api.post("/habits", { title, weekDays });
 
       setTitle("");
       setWeekDays([]);

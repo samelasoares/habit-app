@@ -77,15 +77,10 @@ export function Home() {
             const dayInSummary = summary.find((day) => {
               return dayjs(item).isSame(day.date, "day");
             });
-            console.log(
-              "[File: Home.tsx > DatesFromYears]",
-              item,
-              summary.map((i) => i.date)
-            );
             return (
               <HabitDay
                 key={item.toISOString()}
-                onPress={() => navigate("habit", { date: item.toISOString() })}
+                onPress={() => navigate("Habit", { date: item.toISOString() })}
                 date={item}
                 amountOfHabits={dayInSummary?.amount}
                 amountCompleted={dayInSummary?.completed}
